@@ -1,0 +1,195 @@
+openapi: 3.0.3
+info:
+  title: Nomic AI API
+  description: Nomic AI provides text and image embeddings with models like nomic-embed-text-v1.5 and nomic-embed-vision-v1.5, plus Atlas data visualization.
+  version: "1.0.0"
+  contact:
+    name: Nomic AI
+    url: https://www.nomic.ai
+servers:
+  - url: https://api-atlas.nomic.ai
+    description: Nomic AI Production API
+security:
+  - BearerAuth: []
+paths:
+  /v1/embedding/text:
+    post:
+      operationId: embedText
+      summary: Generate text embeddings
+      description: >-
+        Generates embeddings for the given texts using the specified model.
+        The task_type parameter controls how the embeddings are optimized
+        (e.g. for search queries vs documents, classification, or clustering).
+        Supports Matryoshka-style dimensionality reduction.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TextEmbeddingRequest'
+      responses:
+        '200':
+          description: Successful response with embeddings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+  /v1/embedding/image:
+    post:
+      operationId: embedImage
+      summary: Generate image embeddings
+      description: >-
+        Generates embeddings for the given images using the specified model.
+        Images can be provided as URLs. Supported formats include PNG, JPEG, and WebP.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ImageEmbeddingRequest'
+      responses:
+        '200':
+          description: Successful response with embeddings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EmbeddingResponse'
+        '422':
+          description: Validation error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ValidationError'
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    TextEmbeddingRequest:
+      type: object
+      required:
+        - texts
+        - model
+        - task_type
+      properties:
+        texts:
+          type: array
+          items:
+            type: string
+          description: The list of texts to embed.
+        model:
+          type: string
+          description: The model to use for embedding.
+          default: nomic-embed-text-v1.5
+          enum:
+            - nomic-embed-text-v1
+            - nomic-embed-text-v1.5
+        task_type:
+          type: string
+          description: >-
+            The task type to optimize embeddings for.
+            search_document is for embedding document chunks in retrieval scenarios.
+            search_query is for embedding user search queries.
+            classification is for text classification.
+            clustering is for cluster visualization.
+          default: search_document
+          enum:
+            - search_query
+            - search_document
+            - classification
+            - clustering
+        dimensionality:
+          type: integer
+          minimum: 64
+          maximum: 768
+          nullable: true
+          description: >-
+            The embedding dimension for Matryoshka-capable models.
+            Accepts values from 64 to 768.
+            If not specified, defaults to full-size (768).
+        long_text_mode:
+          type: string
+          description: >-
+            How to handle texts longer than the model can accept.
+            truncate cuts at the max token length.
+            mean averages embeddings of chunks.
+          default: truncate
+          enum:
+            - truncate
+            - mean
+    ImageEmbeddingRequest:
+      type: object
+      required:
+        - urls
+        - model
+      properties:
+        urls:
+          type: array
+          items:
+            type: string
+            format: uri
+          description: The list of image URLs to embed. Supports PNG, JPEG, and WebP formats.
+        model:
+          type: string
+          description: The model to use for image embedding.
+          default: nomic-embed-vision-v1.5
+          enum:
+            - nomic-embed-vision-v1
+            - nomic-embed-vision-v1.5
+    EmbeddingResponse:
+      type: object
+      required:
+        - embeddings
+        - model
+        - usage
+      properties:
+        embeddings:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+              format: float
+          description: The generated embeddings as arrays of floats.
+        model:
+          type: string
+          description: The model used for generating embeddings.
+        usage:
+          $ref: '#/components/schemas/Usage'
+    Usage:
+      type: object
+      properties:
+        prompt_tokens:
+          type: integer
+          description: The number of prompt tokens used.
+        total_tokens:
+          type: integer
+          description: The total number of tokens used.
+    ValidationError:
+      type: object
+      properties:
+        detail:
+          type: array
+          items:
+            type: object
+            properties:
+              loc:
+                type: array
+                items:
+                  oneOf:
+                    - type: string
+                    - type: integer
+                description: The location of the error.
+              msg:
+                type: string
+                description: The error message.
+              type:
+                type: string
+                description: The error type.
