@@ -13,7 +13,7 @@ namespace Nomic
         /// <summary>
         /// Nomic AI Production API
         /// </summary>
-        public const string DefaultBaseUrl = "https://api-atlas.nomic.ai";
+        public const string DefaultBaseUrl = "https://api-atlas.nomic.ai/";
 
         private bool _disposeHttpClient = true;
 

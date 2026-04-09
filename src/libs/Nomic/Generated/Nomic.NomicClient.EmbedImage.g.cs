@@ -5,6 +5,25 @@ namespace Nomic
 {
     public partial class NomicClient
     {
+
+
+        private static readonly global::Nomic.EndPointSecurityRequirement s_EmbedImageSecurityRequirement0 =
+            new global::Nomic.EndPointSecurityRequirement
+            {
+                Authorizations = new global::Nomic.EndPointAuthorizationRequirement[]
+                {                    new global::Nomic.EndPointAuthorizationRequirement
+                    {
+                        Type = "Http",
+                        Location = "Header",
+                        Name = "Bearer",
+                        FriendlyName = "Bearer",
+                    },
+                },
+            };
+        private static readonly global::Nomic.EndPointSecurityRequirement[] s_EmbedImageSecurityRequirements =
+            new global::Nomic.EndPointSecurityRequirement[]
+            {                s_EmbedImageSecurityRequirement0,
+            };
         partial void PrepareEmbedImageArguments(
             global::System.Net.Http.HttpClient httpClient,
             global::Nomic.ImageEmbeddingRequest request);
@@ -41,9 +60,15 @@ namespace Nomic
                 httpClient: HttpClient,
                 request: request);
 
+
+            var __authorizations = global::Nomic.EndPointSecurityResolver.ResolveAuthorizations(
+                availableAuthorizations: Authorizations,
+                securityRequirements: s_EmbedImageSecurityRequirements,
+                operationName: "EmbedImageAsync");
+
             var __pathBuilder = new global::Nomic.PathBuilder(
                 path: "/v1/embedding/image",
-                baseUri: HttpClient.BaseAddress); 
+                baseUri: HttpClient.BaseAddress);
             var __path = __pathBuilder.ToString();
             using var __httpRequest = new global::System.Net.Http.HttpRequestMessage(
                 method: global::System.Net.Http.HttpMethod.Post,
@@ -53,7 +78,7 @@ namespace Nomic
             __httpRequest.VersionPolicy = global::System.Net.Http.HttpVersionPolicy.RequestVersionOrHigher;
 #endif
 
-            foreach (var __authorization in Authorizations)
+            foreach (var __authorization in __authorizations)
             {
                 if (__authorization.Type == "Http" ||
                     __authorization.Type == "OAuth2")
