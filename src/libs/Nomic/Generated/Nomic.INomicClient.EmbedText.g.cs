@@ -9,11 +9,13 @@ namespace Nomic
         /// Generates embeddings for the given texts using the specified model. The task_type parameter controls how the embeddings are optimized (e.g. for search queries vs documents, classification, or clustering). Supports Matryoshka-style dimensionality reduction.
         /// </summary>
         /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::Nomic.ApiException"></exception>
         global::System.Threading.Tasks.Task<global::Nomic.EmbeddingResponse> EmbedTextAsync(
 
             global::Nomic.TextEmbeddingRequest request,
+            global::Nomic.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
         /// <summary>
         /// Generate text embeddings<br/>
@@ -37,6 +39,7 @@ namespace Nomic
         /// How to handle texts longer than the model can accept. truncate cuts at the max token length. mean averages embeddings of chunks.<br/>
         /// Default Value: truncate
         /// </param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
         /// <param name="cancellationToken">The token to cancel the operation with</param>
         /// <exception cref="global::System.InvalidOperationException"></exception>
         global::System.Threading.Tasks.Task<global::Nomic.EmbeddingResponse> EmbedTextAsync(
@@ -45,6 +48,7 @@ namespace Nomic
             global::Nomic.TextEmbeddingRequestTaskType taskType = global::Nomic.TextEmbeddingRequestTaskType.SearchDocument,
             int? dimensionality = default,
             global::Nomic.TextEmbeddingRequestLongTextMode? longTextMode = default,
+            global::Nomic.AutoSDKRequestOptions? requestOptions = default,
             global::System.Threading.CancellationToken cancellationToken = default);
     }
 }
