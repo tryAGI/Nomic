@@ -52,5 +52,6 @@ namespace Nomic
         public Usage()
         {
         }
+
     }
 }
