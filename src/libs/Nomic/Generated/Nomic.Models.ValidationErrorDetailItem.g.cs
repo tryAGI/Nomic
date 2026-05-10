@@ -63,5 +63,6 @@ namespace Nomic
         public ValidationErrorDetailItem()
         {
         }
+
     }
 }

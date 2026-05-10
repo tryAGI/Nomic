@@ -99,5 +99,6 @@ namespace Nomic
         public TextEmbeddingRequest()
         {
         }
+
     }
 }
