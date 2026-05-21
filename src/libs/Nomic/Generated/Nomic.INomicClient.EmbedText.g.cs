@@ -21,6 +21,19 @@ namespace Nomic
         /// Generate text embeddings<br/>
         /// Generates embeddings for the given texts using the specified model. The task_type parameter controls how the embeddings are optimized (e.g. for search queries vs documents, classification, or clustering). Supports Matryoshka-style dimensionality reduction.
         /// </summary>
+        /// <param name="request"></param>
+        /// <param name="requestOptions">Per-request overrides such as headers, query parameters, timeout, retries, and response buffering.</param>
+        /// <param name="cancellationToken">The token to cancel the operation with</param>
+        /// <exception cref="global::Nomic.ApiException"></exception>
+        global::System.Threading.Tasks.Task<global::Nomic.AutoSDKHttpResponse<global::Nomic.EmbeddingResponse>> EmbedTextAsResponseAsync(
+
+            global::Nomic.TextEmbeddingRequest request,
+            global::Nomic.AutoSDKRequestOptions? requestOptions = default,
+            global::System.Threading.CancellationToken cancellationToken = default);
+        /// <summary>
+        /// Generate text embeddings<br/>
+        /// Generates embeddings for the given texts using the specified model. The task_type parameter controls how the embeddings are optimized (e.g. for search queries vs documents, classification, or clustering). Supports Matryoshka-style dimensionality reduction.
+        /// </summary>
         /// <param name="texts">
         /// The list of texts to embed.
         /// </param>
