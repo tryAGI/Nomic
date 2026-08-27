@@ -10,11 +10,11 @@ namespace Nomic
     public enum TextEmbeddingRequestLongTextMode
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Mean,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Truncate,
     }

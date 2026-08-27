@@ -10,19 +10,19 @@ namespace Nomic
     public enum TextEmbeddingRequestTaskType
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Classification,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         Clustering,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         SearchDocument,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         SearchQuery,
     }
