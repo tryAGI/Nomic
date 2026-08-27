@@ -10,11 +10,11 @@ namespace Nomic
     public enum TextEmbeddingRequestModel
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         NomicEmbedTextV1,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         NomicEmbedTextV15,
     }

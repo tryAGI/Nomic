@@ -20,7 +20,7 @@ namespace Nomic.JsonConverters
                     {
                         return global::Nomic.TextEmbeddingRequestModelExtensions.ToEnum(stringValue);
                     }
-                    
+
                     break;
                 }
                 case global::System.Text.Json.JsonTokenType.Number:

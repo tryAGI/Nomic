@@ -10,11 +10,11 @@ namespace Nomic
     public enum ImageEmbeddingRequestModel
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         NomicEmbedVisionV1,
         /// <summary>
-        /// 
+        ///
         /// </summary>
         NomicEmbedVisionV15,
     }

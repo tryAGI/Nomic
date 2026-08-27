@@ -4,12 +4,12 @@
 namespace Nomic
 {
     /// <summary>
-    /// 
+    ///
     /// </summary>
     public sealed partial class ValidationError
     {
         /// <summary>
-        /// 
+        ///
         /// </summary>
         [global::System.Text.Json.Serialization.JsonPropertyName("detail")]
         public global::System.Collections.Generic.IList<global::Nomic.ValidationErrorDetailItem>? Detail { get; set; }
